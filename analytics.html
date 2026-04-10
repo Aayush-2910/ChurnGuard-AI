@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - ChurnGuard AI</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i data-lucide="shield-check"></i>
+                <span>ChurnGuard AI</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">
+                    <i data-lucide="home"></i>
+                    Dashboard
+                </a>
+                <a href="analytics.html" class="nav-link active">
+                    <i data-lucide="bar-chart-3"></i>
+                    Analytics
+                </a>
+                <a href="#" class="nav-link">
+                    <i data-lucide="settings"></i>
+                    Settings
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="header-icon">
+                    <i data-lucide="trending-up"></i>
+                </div>
+                <h1>Customer Analytics Dashboard</h1>
+                <p>Real-time insights and predictive analytics for customer retention</p>
+            </div>
+        </header>
+
+        <div class="analytics-grid">
+            <!-- Key Metrics -->
+            <div class="analytics-card full-width">
+                <div class="card-header-small">
+                    <i data-lucide="activity"></i>
+                    <h3>Key Performance Indicators</h3>
+                </div>
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon" style="background: linear-gradient(135deg, #ff9eb1 0%, #ff8a9e 100%);">
+                            <i data-lucide="users"></i>
+                        </div>
+                        <div class="kpi-content">
+                            <span class="kpi-value">7,043</span>
+                            <span class="kpi-label">Total Customers</span>
+                            <span class="kpi-change positive">
+                                <i data-lucide="trending-up"></i>
+                                +12.5% from last month
+                            </span>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon" style="background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);">
+                            <i data-lucide="user-x"></i>
+                        </div>
+                        <div class="kpi-content">
+                            <span class="kpi-value">1,869</span>
+                            <span class="kpi-label">Churned Customers</span>
+                            <span class="kpi-change negative">
+                                <i data-lucide="trending-down"></i>
+                                26.5% churn rate
+                            </span>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon" style="background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);">
+                            <i data-lucide="shield-check"></i>
+                        </div>
+                        <div class="kpi-content">
+                            <span class="kpi-value">5,174</span>
+                            <span class="kpi-label">Retained Customers</span>
+                            <span class="kpi-change positive">
+                                <i data-lucide="trending-up"></i>
+                                73.5% retention rate
+                            </span>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon" style="background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);">
+                            <i data-lucide="dollar-sign"></i>
+                        </div>
+                        <div class="kpi-content">
+                            <span class="kpi-value">$4.2M</span>
+                            <span class="kpi-label">Monthly Revenue</span>
+                            <span class="kpi-change positive">
+                                <i data-lucide="trending-up"></i>
+                                +8.3% growth
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Churn Distribution Chart -->
+            <div class="analytics-card">
+                <div class="card-header-small">
+                    <i data-lucide="pie-chart"></i>
+                    <h3>Churn Risk Distribution</h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="churnDistChart"></canvas>
+                </div>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <span class="legend-dot" style="background: #4caf50;"></span>
+                        <span>Low Risk (0-40%)</span>
+                        <strong>3,521 customers</strong>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot" style="background: #ff9eb1;"></span>
+                        <span>Medium Risk (40-70%)</span>
+                        <strong>2,108 customers</strong>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot" style="background: #f44336;"></span>
+                        <span>High Risk (70-100%)</span>
+                        <strong>1,414 customers</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Churn by Contract Type -->
+            <div class="analytics-card">
+                <div class="card-header-small">
+                    <i data-lucide="file-text"></i>
+                    <h3>Churn Rate by Contract Type</h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="contractChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Churn by Tenure -->
+            <div class="analytics-card full-width">
+                <div class="card-header-small">
+                    <i data-lucide="calendar"></i>
+                    <h3>Churn Probability by Customer Tenure</h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="tenureChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Service Impact -->
+            <div class="analytics-card">
+                <div class="card-header-small">
+                    <i data-lucide="wifi"></i>
+                    <h3>Service Impact on Retention</h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="serviceChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Payment Method Analysis -->
+            <div class="analytics-card">
+                <div class="card-header-small">
+                    <i data-lucide="credit-card"></i>
+                    <h3>Churn by Payment Method</h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="paymentChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Model Performance -->
+            <div class="analytics-card full-width">
+                <div class="card-header-small">
+                    <i data-lucide="brain-circuit"></i>
+                    <h3>ML Model Performance Metrics</h3>
+                </div>
+                <div class="performance-grid">
+                    <div class="performance-card">
+                        <div class="performance-label">Model Accuracy</div>
+                        <div class="performance-value">84.2%</div>
+                        <div class="performance-bar">
+                            <div class="performance-fill" style="width: 84.2%; background: #4caf50;"></div>
+                        </div>
+                    </div>
+                    <div class="performance-card">
+                        <div class="performance-label">Precision</div>
+                        <div class="performance-value">81.7%</div>
+                        <div class="performance-bar">
+                            <div class="performance-fill" style="width: 81.7%; background: #2196f3;"></div>
+                        </div>
+                    </div>
+                    <div class="performance-card">
+                        <div class="performance-label">Recall</div>
+                        <div class="performance-value">78.9%</div>
+                        <div class="performance-bar">
+                            <div class="performance-fill" style="width: 78.9%; background: #ff9eb1;"></div>
+                        </div>
+                    </div>
+                    <div class="performance-card">
+                        <div class="performance-label">F1 Score</div>
+                        <div class="performance-value">80.3%</div>
+                        <div class="performance-bar">
+                            <div class="performance-fill" style="width: 80.3%; background: #9c27b0;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 ChurnGuard AI. Powered by Machine Learning.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Documentation</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+
+        // Churn Distribution Pie Chart
+        const churnDistCtx = document.getElementById('churnDistChart').getContext('2d');
+        new Chart(churnDistCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Low Risk', 'Medium Risk', 'High Risk'],
+                datasets: [{
+                    data: [3521, 2108, 1414],
+                    backgroundColor: ['#4caf50', '#ff9eb1', '#f44336'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // Contract Type Bar Chart
+        const contractCtx = document.getElementById('contractChart').getContext('2d');
+        new Chart(contractCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Month-to-Month', 'One Year', 'Two Year'],
+                datasets: [{
+                    label: 'Churn Rate %',
+                    data: [42.7, 11.3, 2.8],
+                    backgroundColor: ['#f44336', '#ff9eb1', '#4caf50'],
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 50,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Tenure Line Chart
+        const tenureCtx = document.getElementById('tenureChart').getContext('2d');
+        new Chart(tenureCtx, {
+            type: 'line',
+            data: {
+                labels: ['0-6', '6-12', '12-24', '24-36', '36-48', '48-60', '60+'],
+                datasets: [{
+                    label: 'Churn Probability %',
+                    data: [65, 48, 32, 22, 15, 10, 7],
+                    borderColor: '#ff9eb1',
+                    backgroundColor: 'rgba(255, 158, 177, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 70,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Tenure (months)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Service Impact Horizontal Bar
+        const serviceCtx = document.getElementById('serviceChart').getContext('2d');
+        new Chart(serviceCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Tech Support', 'Online Security', 'Device Protection', 'Online Backup', 'Streaming'],
+                datasets: [{
+                    label: 'Retention Impact %',
+                    data: [18, 15, 12, 11, 8],
+                    backgroundColor: '#4caf50',
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 20,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Payment Method Pie Chart
+        const paymentCtx = document.getElementById('paymentChart').getContext('2d');
+        new Chart(paymentCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Electronic Check', 'Mailed Check', 'Bank Transfer', 'Credit Card'],
+                datasets: [{
+                    data: [45.3, 22.8, 18.5, 13.4],
+                    backgroundColor: ['#f44336', '#ff9eb1', '#2196f3', '#4caf50'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

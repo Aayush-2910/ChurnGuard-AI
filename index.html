@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChurnGuard AI - Customer Retention Analytics</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i data-lucide="shield-check"></i>
+                <span>ChurnGuard AI</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">
+                    <i data-lucide="home"></i>
+                    Dashboard
+                </a>
+                <a href="analytics.html" class="nav-link">
+                    <i data-lucide="bar-chart-3"></i>
+                    Analytics
+                </a>
+                <a href="#" class="nav-link">
+                    <i data-lucide="settings"></i>
+                    Settings
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="header-icon">
+                    <i data-lucide="brain-circuit"></i>
+                </div>
+                <h1>Customer Churn Prediction</h1>
+                <p>Advanced AI-powered analytics using Logistic Regression ML Model</p>
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <i data-lucide="users"></i>
+                        <div class="stat-info">
+                            <span class="stat-value">7,043</span>
+                            <span class="stat-label">Customers Analyzed</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i data-lucide="trending-up"></i>
+                        <div class="stat-info">
+                            <span class="stat-value">84.2%</span>
+                            <span class="stat-label">Model Accuracy</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i data-lucide="target"></i>
+                        <div class="stat-info">
+                            <span class="stat-value">26.5%</span>
+                            <span class="stat-label">Avg Churn Rate</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="form-card">
+                <div class="card-header">
+                    <i data-lucide="file-text"></i>
+                    <h2>Customer Profile Analysis</h2>
+                    <p>Enter customer details for real-time churn risk assessment</p>
+                </div>
+                
+                <form id="predictionForm">
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <i data-lucide="user-circle"></i>
+                            Customer Demographics
+                        </h3>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="gender">
+                                    <i data-lucide="user"></i>
+                                    Gender
+                                </label>
+                                <select id="gender" name="gender" required>
+                                    <option value="">Select gender...</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="seniorCitizen">
+                                    <i data-lucide="accessibility"></i>
+                                    Senior Citizen
+                                </label>
+                                <select id="seniorCitizen" name="seniorCitizen" required>
+                                    <option value="">Select...</option>
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="partner">
+                                    <i data-lucide="heart"></i>
+                                    Has Partner
+                                </label>
+                                <select id="partner" name="partner" required>
+                                    <option value="">Select...</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dependents">
+                                    <i data-lucide="users-2"></i>
+                                    Has Dependents
+                                </label>
+                                <select id="dependents" name="dependents" required>
+                                    <option value="">Select...</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <i data-lucide="calendar-clock"></i>
+                            Account Information
+                        </h3>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="tenure">
+                                    <i data-lucide="clock"></i>
+                                    Tenure (months)
+                                </label>
+                                <input type="number" id="tenure" name="tenure" required min="0" max="100" placeholder="e.g., 24">
+                                <span class="input-hint">Customer relationship duration</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="monthlyCharges">
+                                    <i data-lucide="dollar-sign"></i>
+                                    Monthly Charges ($)
+                                </label>
+                                <input type="number" id="monthlyCharges" name="monthlyCharges" required step="0.01" min="0" placeholder="e.g., 65.50">
+                                <span class="input-hint">Current monthly billing amount</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="totalCharges">
+                                    <i data-lucide="wallet"></i>
+                                    Total Charges ($)
+                                </label>
+                                <input type="number" id="totalCharges" name="totalCharges" required step="0.01" min="0" placeholder="e.g., 1500.00">
+                                <span class="input-hint">Lifetime revenue from customer</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <i data-lucide="wifi"></i>
+                            Service Subscriptions
+                        </h3>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="phoneService">
+                                    <i data-lucide="phone"></i>
+                                    Phone Service
+                                </label>
+                                <select id="phoneService" name="phoneService" required>
+                                    <option value="">Select...</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="multipleLines">
+                                    <i data-lucide="phone-call"></i>
+                                    Multiple Lines
+                                </label>
+                                <select id="multipleLines" name="multipleLines" required>
+                                    <option value="">Select...</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="No phone service">No Phone Service</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="internetService">
+                                    <i data-lucide="globe"></i>
+                                    Internet Service
+                                </label>
+                                <select id="internetService" name="internetService" required>
+                                    <option value="">Select...</option>
+                                    <option value="DSL">DSL</option>
+                                    <option value="Fiber optic">Fiber Optic</option>
+                                    <option value="No">No Internet</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="onlineSecurity">
+                                    <i data-lucide="shield"></i>
+                                    Online Security
+                                </label>
+                                <select id="onlineSecurity" name="onlineSecurity" required>
+                                    <option value="">Select...</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="No internet service">No Internet Service</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="onlineBackup">
+                                    <i data-lucide="hard-drive"></i>
+                                    Online Backup
+                                </label>
+                                <select id="onlineBackup" name="onlineBackup" required>
+                                    <option value="">Select...</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="No internet service">No Internet Service</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="deviceProtection">
+                                    <i data-lucide="smartphone"></i>
+                                    Device Protection
+                                </label>
+                                <select id="deviceProtection" name="deviceProtection" required>
+                                    <option value="">Select...</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="No internet service">No Internet Service</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="techSupport">
+                                    <i data-lucide="headphones"></i>
+                                    Tech Support
+                                </label>
+                                <select id="techSupport" name="techSupport" required>
+                                    <option value="">Select...</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="No internet service">No Internet Service</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="streamingTV">
+                                    <i data-lucide="tv"></i>
+                                    Streaming TV
+                                </label>
+                                <select id="streamingTV" name="streamingTV" required>
+                                    <option value="">Select...</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="No internet service">No Internet Service</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="streamingMovies">
+                                    <i data-lucide="film"></i>
+                                    Streaming Movies
+                                </label>
+                                <select id="streamingMovies" name="streamingMovies" required>
+                                    <option value="">Select...</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="No internet service">No Internet Service</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <i data-lucide="credit-card"></i>
+                            Billing & Contract Details
+                        </h3>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="contract">
+                                    <i data-lucide="file-signature"></i>
+                                    Contract Type
+                                </label>
+                                <select id="contract" name="contract" required>
+                                    <option value="">Select...</option>
+                                    <option value="Month-to-month">Month-to-Month</option>
+                                    <option value="One year">One Year</option>
+                                    <option value="Two year">Two Year</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="paperlessBilling">
+                                    <i data-lucide="file-check"></i>
+                                    Paperless Billing
+                                </label>
+                                <select id="paperlessBilling" name="paperlessBilling" required>
+                                    <option value="">Select...</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="paymentMethod">
+                                    <i data-lucide="banknote"></i>
+                                    Payment Method
+                                </label>
+                                <select id="paymentMethod" name="paymentMethod" required>
+                                    <option value="">Select...</option>
+                                    <option value="Electronic check">Electronic Check</option>
+                                    <option value="Mailed check">Mailed Check</option>
+                                    <option value="Bank transfer (automatic)">Bank Transfer (Auto)</option>
+                                    <option value="Credit card (automatic)">Credit Card (Auto)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <i data-lucide="sparkles"></i>
+                        <span>Analyze Churn Risk</span>
+                        <i data-lucide="arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+
+            <div id="loading" class="loading">
+                <div class="spinner-container">
+                    <i data-lucide="loader-circle" class="spinner-icon"></i>
+                </div>
+                <div class="loading-text">Processing customer data with AI model...</div>
+                <div class="loading-subtext">Analyzing 19 features across multiple dimensions</div>
+            </div>
+
+            <div id="result" class="result-card hidden">
+                <div class="result-header">
+                    <div class="result-icon" id="resultIcon"></div>
+                    <h2 id="resultTitle"></h2>
+                </div>
+                
+                <div class="result-body">
+                    <div class="probability-section">
+                        <div class="probability-label">
+                            <i data-lucide="activity"></i>
+                            <span>Churn Probability Score</span>
+                        </div>
+                        <div class="probability-bar">
+                            <div class="probability-fill" id="probabilityFill"></div>
+                        </div>
+                        <div class="probability-details">
+                            <span class="probability-value" id="probabilityValue"></span>
+                            <span class="probability-confidence">Confidence: High</span>
+                        </div>
+                    </div>
+
+                    <div class="insight-message" id="resultMessage"></div>
+
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <i data-lucide="dollar-sign"></i>
+                            <div class="metric-content">
+                                <span class="metric-label">Customer Lifetime Value</span>
+                                <span class="metric-value" id="clvValue">$0</span>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <i data-lucide="trending-down"></i>
+                            <div class="metric-content">
+                                <span class="metric-label">Potential Revenue Loss</span>
+                                <span class="metric-value" id="lossValue">$0</span>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <i data-lucide="shield-check"></i>
+                            <div class="metric-content">
+                                <span class="metric-label">Retention Priority</span>
+                                <span class="metric-value" id="priorityValue">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-recommendations" id="recommendations"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 ChurnGuard AI. Powered by Machine Learning.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Documentation</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="gender" required>
+                            <option value="">Select...</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="seniorCitizen">Senior Citizen</label>
+                        <select id="seniorCitizen" name="seniorCitizen" required>
+                            <option value="">Select...</option>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="partner">Has Partner</label>
+                        <select id="partner" name="partner" required>
+                            <option value="">Select...</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dependents">Has Dependents</label>
+                        <select id="dependents" name="dependents" required>
+                            <option value="">Select...</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tenure">Tenure (months)</label>
+                        <input type="number" id="tenure" name="tenure" required min="0" max="100" placeholder="e.g., 12">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="monthlyCharges">Monthly Charges ($)</label>
+                        <input type="number" id="monthlyCharges" name="monthlyCharges" required step="0.01" min="0" placeholder="e.g., 65.50">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="totalCharges">Total Charges ($)</label>
+                        <input type="number" id="totalCharges" name="totalCharges" required step="0.01" min="0" placeholder="e.g., 1500.00">
+                    </div>
+                </div>
+
+                <h3 class="section-title">
+                    <i data-lucide="wifi"></i>
+                    Services
+                </h3>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="phoneService">Phone Service</label>
+                        <select id="phoneService" name="phoneService" required>
+                            <option value="">Select...</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="multipleLines">Multiple Lines</label>
+                        <select id="multipleLines" name="multipleLines" required>
+                            <option value="">Select...</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                            <option value="No phone service">No Phone Service</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="internetService">Internet Service</label>
+                        <select id="internetService" name="internetService" required>
+                            <option value="">Select...</option>
+                            <option value="DSL">DSL</option>
+                            <option value="Fiber optic">Fiber Optic</option>
+                            <option value="No">No Internet</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="onlineSecurity">Online Security</label>
+                        <select id="onlineSecurity" name="onlineSecurity" required>
+                            <option value="">Select...</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                            <option value="No internet service">No Internet Service</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="onlineBackup">Online Backup</label>
+                        <select id="onlineBackup" name="onlineBackup" required>
+                            <option value="">Select...</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                            <option value="No internet service">No Internet Service</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="deviceProtection">Device Protection</label>
+                        <select id="deviceProtection" name="deviceProtection" required>
+                            <option value="">Select...</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                            <option value="No internet service">No Internet Service</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="techSupport">Tech Support</label>
+                        <select id="techSupport" name="techSupport" required>
+                            <option value="">Select...</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                            <option value="No internet service">No Internet Service</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="streamingTV">Streaming TV</label>
+                        <select id="streamingTV" name="streamingTV" required>
+                            <option value="">Select...</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                            <option value="No internet service">No Internet Service</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="streamingMovies">Streaming Movies</label>
+                        <select id="streamingMovies" name="streamingMovies" required>
+                            <option value="">Select...</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                            <option value="No internet service">No Internet Service</option>
+                        </select>
+                    </div>
+                </div>
+
+                <h3 class="section-title">
+                    <i data-lucide="credit-card"></i>
+                    Billing & Contract
+                </h3>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="contract">Contract Type</label>
+                        <select id="contract" name="contract" required>
+                            <option value="">Select...</option>
+                            <option value="Month-to-month">Month-to-Month</option>
+                            <option value="One year">One Year</option>
+                            <option value="Two year">Two Year</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="paperlessBilling">Paperless Billing</label>
+                        <select id="paperlessBilling" name="paperlessBilling" required>
+                            <option value="">Select...</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="paymentMethod">Payment Method</label>
+                        <select id="paymentMethod" name="paymentMethod" required>
+                            <option value="">Select...</option>
+                            <option value="Electronic check">Electronic Check</option>
+                            <option value="Mailed check">Mailed Check</option>
+                            <option value="Bank transfer (automatic)">Bank Transfer</option>
+                            <option value="Credit card (automatic)">Credit Card</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i data-lucide="sparkles"></i>
+                    <span>Predict Churn Risk</span>
+                    <i data-lucide="arrow-right"></i>
+                </button>
+            </form>
+        </div>
+
+        <div id="loading" class="loading">
+            <div class="spinner-container">
+                <i data-lucide="loader-circle" class="spinner-icon"></i>
+            </div>
+            <div class="loading-text">Analyzing customer data...</div>
+        </div>
+
+        <div id="result" class="result hidden">
+            <div class="result-content">
+                <div class="result-icon" id="resultIcon"></div>
+                <h2 id="resultTitle"></h2>
+                <div class="probability">
+                    <span>Churn Probability</span>
+                    <div class="probability-bar">
+                        <div class="probability-fill" id="probabilityFill"></div>
+                    </div>
+                    <span class="probability-value" id="probabilityValue"></span>
+                </div>
+                <p id="resultMessage"></p>
+                <div class="action-recommendations" id="recommendations"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
