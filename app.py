@@ -19,6 +19,10 @@ def index():
 def analytics():
     return send_from_directory('.', 'analytics.html')
 
+@app.route('/analytics')
+def analytics_redirect():
+    return send_from_directory('.', 'analytics.html')
+
 @app.route('/<path:path>')
 def serve_static(path):
     if os.path.exists(path):
